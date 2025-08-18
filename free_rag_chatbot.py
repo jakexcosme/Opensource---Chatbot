@@ -21,15 +21,16 @@ except ImportError as e:
     print("📦 Please install with: pip3 install -r requirements.txt")
     sys.exit(1)
 
-class FreeRAGChatbot:
+class JakeCosmeRAGChatbot:
     """
-    A RAG chatbot using completely free, open-source models.
-    No API keys required!
+    Jake Cosme's Personal RAG Chatbot - trained on "The Recipe" life story.
+    Uses completely free, open-source models. No API keys required!
     """
     
     def __init__(self, documents_dir: str = "sample_documents"):
         """Initialize the free RAG chatbot."""
-        print("🚀 Initializing Free RAG Chatbot...")
+        print("🚀 Initializing Jake Cosme's RAG Chatbot...")
+        print("📖 Trained on 'The Recipe' - Jake Cosme's life story")
         print("📚 This may take a moment to download models the first time...")
         
         print("🔄 Loading embedding model...")
@@ -44,7 +45,7 @@ class FreeRAGChatbot:
         
         self.collection = self.chroma_client.get_or_create_collection(
             name="documents",
-            metadata={"description": "Document chunks for RAG"}
+            metadata={"description": "Jake Cosme's life story and documents"}
         )
         print("✅ Vector database ready!")
         
@@ -54,18 +55,19 @@ class FreeRAGChatbot:
         
         self.response_templates = {
             "greeting": [
-                "Hello! I'm your free RAG chatbot. I can help answer questions about your documents.",
-                "Hi there! Ask me anything about the documents I've processed.",
-                "Welcome! I'm ready to help you explore your document collection."
+                "Hello! I'm Jake Cosme's personal RAG chatbot, trained on 'The Recipe' - his life story.",
+                "Hi there! Ask me anything about Jake Cosme's journey, experiences, or insights from 'The Recipe'.",
+                "Welcome! I'm ready to help you explore Jake Cosme's life story and wisdom."
             ],
             "no_context": [
-                "I couldn't find relevant information in your documents about that topic.",
-                "That question doesn't seem to match any content in your documents.",
-                "I don't have information about that in the current document collection."
+                "I couldn't find information about that in Jake's story or documents.",
+                "That question doesn't seem to match any content from 'The Recipe' or Jake's documents.",
+                "I don't have information about that in Jake Cosme's current document collection."
             ]
         }
         
-        print("🎉 Free RAG Chatbot is ready!")
+        print("🎉 Jake Cosme's RAG Chatbot is ready!")
+        print("📖 Ask me about Jake's life story, experiences, and insights from 'The Recipe'!")
         print("💡 Note: This uses a simple response system. For advanced AI responses,")
         print("   you can upgrade to use Ollama or Hugging Face models (see instructions).")
     
@@ -242,26 +244,27 @@ class FreeRAGChatbot:
 
 def main():
     """Main function to run the chatbot."""
-    print("🤖 Welcome to the Free RAG Chatbot!")
-    print("=" * 50)
+    print("🤖 Welcome to Jake Cosme's Personal RAG Chatbot!")
+    print("=" * 60)
+    print("📖 Trained on 'The Recipe' - Jake Cosme's Life Story")
     print("💰 No API keys required - completely free!")
     print("🏠 Runs entirely on your local computer")
-    print("📚 Ask questions about your documents")
-    print("=" * 50)
+    print("💡 Ask about Jake's journey, experiences, and insights")
+    print("=" * 60)
     
     try:
-        chatbot = FreeRAGChatbot()
+        chatbot = JakeCosmeRAGChatbot()
         
         print("\n💬 Chat started! Type 'quit', 'exit', or 'bye' to end.")
-        print("🔍 Try asking: 'What is Python?' or 'Explain machine learning'")
+        print("🔍 Try asking: 'Tell me about Jake's journey' or 'What is The Recipe about?'")
         print("📤 To upload a file, type: 'upload /path/to/your/file.pdf'")
-        print("-" * 50)
+        print("-" * 60)
         
         while True:
             user_input = input("\n🧑 You: ").strip()
             
             if user_input.lower() in ['quit', 'exit', 'bye', 'q']:
-                print("\n👋 Thanks for using the Free RAG Chatbot! Goodbye!")
+                print("\n👋 Thanks for exploring Jake Cosme's story! Goodbye!")
                 break
             
             if not user_input:

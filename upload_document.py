@@ -6,7 +6,7 @@ Simple script to upload documents to your RAG chatbot.
 
 import sys
 import os
-from free_rag_chatbot import FreeRAGChatbot
+from free_rag_chatbot import JakeCosmeRAGChatbot
 
 def main():
     if len(sys.argv) != 2:
@@ -21,9 +21,9 @@ def main():
         print(f"❌ File not found: {file_path}")
         sys.exit(1)
     
-    print("🚀 Initializing RAG Chatbot for document upload...")
+    print("🚀 Initializing Jake Cosme's RAG Chatbot for document upload...")
     try:
-        chatbot = FreeRAGChatbot()
+        chatbot = JakeCosmeRAGChatbot()
         
         print(f"\n📤 Uploading: {os.path.basename(file_path)}")
         success = chatbot.add_uploaded_document(file_path)
