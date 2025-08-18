@@ -123,6 +123,68 @@ class FreeRAGChatbot:
             
             print(f"✅ Successfully processed {len(documents)} documents into {len(all_chunks)} chunks!")
     
+    def add_uploaded_document(self, file_path: str, source_name: str = None) -> bool:
+        """
+        Add a single uploaded document to the vector database.
+        
+        Args:
+            file_path: Path to the uploaded file
+            source_name: Optional custom name for the document
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        print(f"📤 Processing uploaded file: {os.path.basename(file_path)}")
+        
+        document = self.doc_processor.process_single_file(file_path, source_name)
+        if not document:
+            return False
+            
+        existing_docs = self.collection.get()
+        if existing_docs['ids']:
+            existing_sources = [meta['source'] for meta in existing_docs['metadatas']]
+            if document['source'] in existing_sources:
+                print(f"⚠️  Document '{document['source']}' already exists in database")
+                response = input("Do you want to replace it? (y/n): ").lower()
+                if response != 'y':
+                    return False
+                existing_ids = [id for id, meta in zip(existing_docs['ids'], existing_docs['metadatas']) 
+                              if meta['source'] == document['source']]
+                if existing_ids:
+                    self.collection.delete(ids=existing_ids)
+                    print(f"🗑️  Removed {len(existing_ids)} existing chunks")
+        
+        chunks = self.doc_processor.chunk_text(document['content'])
+        print(f"📄 Created {len(chunks)} chunks from document")
+        
+        all_chunks = []
+        all_metadatas = []
+        all_ids = []
+        
+        for i, chunk in enumerate(chunks):
+            chunk_id = f"{document['source']}_chunk_{i}"
+            all_chunks.append(chunk)
+            all_metadatas.append({
+                "source": document['source'],
+                "chunk_index": i,
+                "chunk_length": len(chunk)
+            })
+            all_ids.append(chunk_id)
+        
+        print(f"🔄 Creating embeddings for {len(all_chunks)} chunks...")
+        embeddings = self.embedding_model.encode(all_chunks).tolist()
+        
+        self.collection.add(
+            embeddings=embeddings,
+            documents=all_chunks,
+            metadatas=all_metadatas,
+            ids=all_ids
+        )
+        
+        print(f"✅ Successfully added '{document['source']}' to knowledge base!")
+        print(f"   Total chunks in database: {self.collection.count()}")
+        return True
+
     def search_documents(self, query: str, top_k: int = 3) -> List[Dict[str, Any]]:
         """Search for relevant document chunks."""
         query_embedding = self.embedding_model.encode([query]).tolist()
@@ -192,6 +254,7 @@ def main():
         
         print("\n💬 Chat started! Type 'quit', 'exit', or 'bye' to end.")
         print("🔍 Try asking: 'What is Python?' or 'Explain machine learning'")
+        print("📤 To upload a file, type: 'upload /path/to/your/file.pdf'")
         print("-" * 50)
         
         while True:
@@ -202,6 +265,18 @@ def main():
                 break
             
             if not user_input:
+                continue
+            
+            if user_input.lower().startswith('upload '):
+                file_path = user_input[7:].strip()
+                if file_path:
+                    success = chatbot.add_uploaded_document(file_path)
+                    if success:
+                        print("🎉 File uploaded successfully! You can now ask questions about it.")
+                    else:
+                        print("❌ Failed to upload file. Please check the file path and format.")
+                else:
+                    print("❌ Please provide a file path. Example: upload /path/to/your/book.pdf")
                 continue
             
             print("\n🤖 Chatbot: ", end="")

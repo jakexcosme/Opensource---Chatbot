@@ -152,6 +152,44 @@ class DocumentProcessor:
         print(f"📄 Total chunks created: {len(processed_chunks)}")
         return processed_chunks
 
+    def process_single_file(self, file_path: str, source_name: str = None) -> Dict[str, str]:
+        """
+        Process a single uploaded file.
+        
+        Args:
+            file_path: Path to the uploaded file
+            source_name: Optional custom name for the document source
+            
+        Returns:
+            Dictionary with 'content' and 'source' keys, or None if processing fails
+        """
+        if not os.path.exists(file_path):
+            print(f"❌ File not found: {file_path}")
+            return None
+            
+        extension = os.path.splitext(file_path)[1].lower()
+        if extension not in self.supported_extensions:
+            print(f"❌ Unsupported file type: {extension}")
+            print(f"   Supported types: {', '.join(self.supported_extensions)}")
+            return None
+            
+        try:
+            content = self._extract_text(file_path, extension)
+            if content.strip():
+                document_name = source_name or os.path.basename(file_path)
+                print(f"✅ Successfully processed: {document_name}")
+                print(f"   Content length: {len(content)} characters")
+                return {
+                    'content': content,
+                    'source': document_name
+                }
+            else:
+                print(f"⚠️  File appears to be empty: {file_path}")
+                return None
+        except Exception as e:
+            print(f"❌ Error processing {file_path}: {str(e)}")
+            return None
+
 if __name__ == "__main__":
     processor = DocumentProcessor()
     

@@ -52,6 +52,31 @@ python3 free_rag_chatbot.py
 
 **Want smarter AI responses?** Check out `UPGRADE_GUIDE.md` for free AI model options like Ollama and Hugging Face!
 
+### 📤 **Upload Your Own Documents**
+
+You can easily add your own documents to the chatbot:
+
+#### Method 1: During Chat
+```bash
+python3 free_rag_chatbot.py
+# Then type: upload /path/to/your/document.pdf
+```
+
+#### Method 2: Upload Helper Script
+```bash
+python3 upload_document.py /path/to/your/document.pdf
+python3 free_rag_chatbot.py
+```
+
+#### Method 3: Copy to Sample Documents
+```bash
+cp /path/to/your/document.pdf sample_documents/
+python3 free_rag_chatbot.py
+```
+
+**Supported file formats:** PDF, TXT, DOCX
+**Large files:** The system handles large documents (100+ pages) by automatically chunking them for optimal search.
+
 ---
 
 ### 💰 **PREMIUM VERSION (OpenAI GPT)**
