@@ -1,0 +1,58 @@
+# Python Programming Basics
+
+Python is a high-level, interpreted programming language known for its simplicity and readability. It was created by Guido van Rossum and first released in 1991.
+
+## Key Features of Python
+
+1. **Easy to Learn**: Python has a simple syntax that makes it accessible to beginners
+2. **Versatile**: Used for web development, data science, AI, automation, and more
+3. **Large Community**: Extensive libraries and frameworks available
+4. **Cross-platform**: Runs on Windows, Mac, Linux, and other operating systems
+
+## Basic Python Concepts
+
+### Variables
+Variables in Python are used to store data. You don't need to declare the type explicitly.
+
+Example:
+- name = "Alice"
+- age = 25
+- height = 5.6
+
+### Data Types
+Python has several built-in data types:
+- Strings: Text data ("Hello World")
+- Integers: Whole numbers (42)
+- Floats: Decimal numbers (3.14)
+- Lists: Ordered collections [1, 2, 3]
+- Dictionaries: Key-value pairs {"name": "Bob", "age": 30}
+
+### Control Structures
+- if/else statements for decision making
+- for loops for iteration
+- while loops for repeated execution
+
+### Functions
+Functions are reusable blocks of code that perform specific tasks.
+
+def greet(name):
+    return f"Hello, {name}!"
+
+## Popular Python Libraries
+
+1. **NumPy**: Numerical computing
+2. **Pandas**: Data manipulation and analysis
+3. **Matplotlib**: Data visualization
+4. **Django/Flask**: Web development
+5. **TensorFlow/PyTorch**: Machine learning
+6. **Requests**: HTTP library for API calls
+
+## Getting Started with Python
+
+1. Install Python from python.org
+2. Use an IDE like PyCharm, VS Code, or Jupyter Notebook
+3. Start with simple programs like "Hello World"
+4. Practice with online tutorials and coding challenges
+5. Build small projects to apply your knowledge
+
+Python is an excellent choice for beginners and experienced programmers alike due to its readability and extensive ecosystem.
