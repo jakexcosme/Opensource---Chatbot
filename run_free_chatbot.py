@@ -15,7 +15,7 @@ def check_dependencies():
         'chromadb',
         'numpy',
         'PyPDF2',
-        'python_docx'
+        'docx'
     ]
     
     missing_packages = []
